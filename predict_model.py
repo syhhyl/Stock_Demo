@@ -20,18 +20,18 @@ def predict(stock_code):
 
     try:
         auc = roc_auc_score(y, final_preds)
-        print(f"📈 AUC = {auc:.4f}")
+        print(f"AUC = {auc:.4f}")
     except Exception as e:
         print(f"AUC 计算失败: {e}")
 
     last = final_preds[-1]
-    print(f"\n📅 明日上涨概率 ≈ {last:.4f}")
+    print(f"\n明日上涨概率 ≈ {last:.4f}")
     if last > 0.6:
-        print("🟢 建议：可以买入")
+        print("建议：可以买入")
     elif last > 0.5:
-        print("🟡 建议：谨慎买入")
+        print("建议：谨慎买入")
     else:
-        print("🔴 建议：不建议买入")
+        print("建议：不建议买入")
 
 if __name__ == "__main__":
     while True:

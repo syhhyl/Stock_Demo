@@ -5,6 +5,10 @@ from sklearn.model_selection import train_test_split
 from data_loader import fetch_stock_data, feature_engineering, prepare_data_for_model
 
 def load_stock_list(file_path="stock_code.txt"):
+    """
+    file_path:一系列股票代码，要训练的数据
+    返回股票代码列表
+    """
     with open(file_path, "r") as f:
         return [line.strip() for line in f if line.strip()]
 
@@ -19,7 +23,7 @@ def train_model():
             all_X.append(X)
             all_y.append(y)
         except Exception as e:
-            print(f"❌ {code} error: {e}")
+            print(f"{code} error: {e}")
 
     X_all = pd.concat(all_X, ignore_index=True)
     y_all = pd.concat(all_y, ignore_index=True)
@@ -54,7 +58,7 @@ def train_model():
     )
 
     joblib.dump(model, 'stock_model.pkl')
-    print("✅ 模型已保存为 stock_model.pkl")
+    print("模型已保存")
 
 if __name__ == "__main__":
     train_model()
