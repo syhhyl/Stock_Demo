@@ -33,12 +33,18 @@ def predict(stock_code):
     else:
         print("建议：不建议买入")
 
+def info(stock_code):
+  df = fetch_stock_data(stock_code) 
+  df = feature_engineering(df)
+  print(df)
+    
 if __name__ == "__main__":
     while True:
         code = input("输入股票代码 (q退出): ").strip().upper()
         if code == "Q":
             break
         try:
-            predict(code)
+            # predict(code)
+            info(code)
         except Exception as e:
             print(e)

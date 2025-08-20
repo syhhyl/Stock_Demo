@@ -22,8 +22,10 @@ def train_model():
             X, y = prepare_data_for_model(df)
             all_X.append(X)
             all_y.append(y)
+            print(5)
         except Exception as e:
             print(f"{code} error: {e}")
+        
 
     X_all = pd.concat(all_X, ignore_index=True)
     y_all = pd.concat(all_y, ignore_index=True)
@@ -61,4 +63,5 @@ def train_model():
     print("模型已保存")
 
 if __name__ == "__main__":
+    print(2)
     train_model()
