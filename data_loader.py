@@ -20,7 +20,8 @@ def compute_kdj(df, n=9):
     d = k.ewm(com=2).mean()
     j = 3 * k - 2 * d
     df['J'] = j
-    print(type(df))
+    # print(type(df))
+    print(df['J'])
     return df
 
 def feature_engineering(df):
@@ -33,17 +34,24 @@ def feature_engineering(df):
     # df['close_low_diff'] = df['close'] - df['low']
     # df['range'] = df['high'] - df['low']
     # df['return_sign'] = np.sign(df['return'])
-    # df['label'] = (df['close'].shift(-2) > df['close']).astype(int)  # 改进标签定义
+    df['label'] = (df['close'].shift(-2) > df['close']).astype(int)  # 改进标签定义
 
     df = compute_kdj(df)
     df = df.dropna().reset_index(drop=True)
     return df
 
 def prepare_data_for_model(df):
-    features = [
-        'return', 'ma_diff', 'vol_ratio', 'high_close_diff',
-        'close_low_diff', 'range', 'return_sign', 'J', 'kdj_buy_signal'
-    ]
+    # features = [
+    #     'return', 'ma_diff', 'vol_ratio', 'high_close_diff',
+    #     'close_low_diff', 'range', 'return_sign', 'J', 'kdj_buy_signal'
+    # ]
+    features = ['J']
     X = df[features]
     y = df['label']
     return X, y
+
+if __name__ == "__main__":
+  df = fetch_stock_data("600030")
+  df = compute_kdj(df)
+  print(df)
+  
