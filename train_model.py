@@ -19,15 +19,14 @@ def train_model():
         try:
             df = fetch_stock_data(code)
             df = feature_engineering(df)
-            # print(df)
-            # print("debug")
             X, y = prepare_data_for_model(df)
             all_X.append(X)
             all_y.append(y)
-            # print(5)
         except Exception as e:
             print(f"{code} error: {e}")
-          
+    
+    if not all_X or not all_y:
+        raise RuntimeError("没有可用的数据用于训练，请确认本地缓存或网络可用性")
 
     X_all = pd.concat(all_X, ignore_index=True)
     y_all = pd.concat(all_y, ignore_index=True)
@@ -62,7 +61,7 @@ def train_model():
     )
 
     joblib.dump(model, 'stock_model.pkl')
-    print("模型已保存")
+    print("模型已保存: stock_model.pkl")
 
 if __name__ == "__main__":
     train_model()
